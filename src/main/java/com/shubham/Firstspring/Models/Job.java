@@ -9,6 +9,16 @@ public class Job {
     String location;
 
     public Job() {
+
+    }
+
+    public Job(Job job){
+        this.id = job.getId();
+        this.title = job.getTitle();
+        this.description = job.getDescription();
+        this.minSalary = job.getMinSalary();
+        this.maxSalary = job.getMaxSalary();
+        this.location = job.getLocation();
     }
 
     public Job(Long id, String title, String description, Long minSalary, Long maxSalary, String location) {

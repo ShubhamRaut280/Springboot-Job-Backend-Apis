@@ -5,6 +5,7 @@ import com.shubham.Firstspring.Services.Interfaces.JobServiceInterface;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -35,9 +36,10 @@ public class JobService implements JobServiceInterface {
 
     @Override
     public boolean deleteJob(Long id){
-        for(Job job : jobList){
-            if(job.getId().equals(id)){
-                jobList.remove(job);
+        Iterator<Job> it = jobList.iterator();
+        while(it.hasNext()){
+            if(it.next().getId().equals(id)){
+                it.remove();
                 return true;
             }
         }
@@ -45,5 +47,19 @@ public class JobService implements JobServiceInterface {
         return false;
     }
 
-
+    @Override
+    public Job updateJob(Long id, Job job) {
+        for(int i = 0; i < jobList.size(); i++){
+            if(jobList.get(i).getId().equals(id)){
+                jobList.get(i).setDescription(job.getDescription());
+                jobList.get(i).setLocation(job.getLocation());
+                jobList.get(i).setTitle(job.getTitle());
+                jobList.get(i).setMaxSalary(job.getMaxSalary());
+                jobList.get(i).setMinSalary(job.getMinSalary());
+                return jobList.get(i);
+            }
+        }
+        jobList.add(job);
+        return  job;
+    }
 }
