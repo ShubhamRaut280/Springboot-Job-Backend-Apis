@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-
+@RequestMapping("/jobs")
 public class JobController {
 
     private HttpStatus status;
@@ -21,17 +21,17 @@ public class JobController {
         this.jobService = jobService;
     }
 
-    @GetMapping("/jobs")
+    @GetMapping
     private ResponseEntity<List<Job>> getJobList(){
         return new ResponseEntity<>(jobService.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/jobs")
+    @PostMapping
     private ResponseEntity<String> addJob(@RequestBody Job job){
         jobService.createJob(job);
         return new ResponseEntity<>("Job added successfully (through service)", HttpStatus.CREATED);
     }
-    @GetMapping("/jobs/{id}")
+    @GetMapping("/{id}")
     private ResponseEntity<Job> getJobById(@PathVariable Long id){
         Job response = jobService.getJobById(id);
         if(response==null)
@@ -40,7 +40,7 @@ public class JobController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/jobs/{id}")
+    @DeleteMapping("/{id}")
     private ResponseEntity<String> deleteJob(@PathVariable Long id){
         boolean res = jobService.deleteJob(id);
         if(res)
@@ -49,7 +49,7 @@ public class JobController {
          return new ResponseEntity<>("Job not found", HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/jobs/{id}")
+    @PutMapping("/{id}")
     private ResponseEntity<Job> updateJob(@PathVariable Long id , @RequestBody Job job){
         Job res = jobService.updateJob(id, job);
 
