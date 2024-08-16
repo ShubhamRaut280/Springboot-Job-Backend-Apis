@@ -50,11 +50,23 @@ public class JobController {
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<Job> updateJob(@PathVariable Long id , @RequestBody Job job){
-        Job res = jobService.updateJob(id, job);
+    private ResponseEntity<String> updateJob(@PathVariable Long id , @RequestBody Job job){
+        boolean res = jobService.updateJob(id, job);
 
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        if(res)
+            return new ResponseEntity<>("Job updated succesfully", HttpStatus.OK);
 
+        return new ResponseEntity<>("Job not found", HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping
+    private ResponseEntity<String> clearDb(){
+        boolean res = jobService.clearDb();
+
+        if(res)
+            return new ResponseEntity<>("DB cleared succesfully", HttpStatus.OK);
+
+        return new ResponseEntity<>("Error in clering db", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
