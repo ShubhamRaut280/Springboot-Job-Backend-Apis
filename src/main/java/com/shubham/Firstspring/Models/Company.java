@@ -1,5 +1,6 @@
 package com.shubham.Firstspring.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,9 +13,11 @@ public class Company {
     String name;
     String description;
 
-    @OneToMany
+    @OneToMany (mappedBy = "company")
     List<Job> jobs;
+    @OneToMany (mappedBy = "company")
     List<Reviews> reviews;
+
 
     public Company() {
     }

@@ -68,6 +68,7 @@ public class JobService implements JobServiceInterface {
                 job1.setTitle(job.getTitle());
                 job1.setMaxSalary(job.getMaxSalary());
                 job1.setMinSalary(job.getMinSalary());
+                job1.setCompany(job.getCompany());
                 jobRepository.save(job1);
                 return true;
         }

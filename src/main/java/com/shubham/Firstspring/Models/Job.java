@@ -1,5 +1,6 @@
 package com.shubham.Firstspring.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import javax.annotation.processing.Generated;
@@ -14,6 +15,18 @@ public class Job {
     Long minSalary;
     Long maxSalary;
     String location;
+
+    @JsonIgnore
+    @ManyToOne
+    Company company;
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 
     public Job() {
 
