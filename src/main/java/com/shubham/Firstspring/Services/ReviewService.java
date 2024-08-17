@@ -39,18 +39,30 @@ public class ReviewService implements ReviewServiceInterface {
 
     @Override
     public Reviews getReviewByid(Long id, Long reviewId) {
-        return reviewRepository.findById(reviewId).orElse(null);
+        List<Reviews> reviews = reviewRepository.findByCompanyId(id);
+        if(reviews!=null){
+            for(Reviews reviews1 : reviews){
+                if(reviews1.getId().equals(reviews1))
+                    return reviews1;
+            }
+        }
+
+        return null;
     }
 
     @Override
     public boolean updateReview(Long id, Long reviewId, Reviews review) {
-        if(!reviewRepository.existsById(reviewId))return false;
-        Reviews reviewToUpdate = reviewRepository.findById(reviewId).orElse(null);
-        reviewToUpdate.setContent(review.getContent());
-        reviewToUpdate.setCompany(review.getCompany());
-        reviewToUpdate.setType(review.isType());
+        Company company = companyRepository.findById(id).orElse(null);
+        if(company==null)return false;
 
-        reviewRepository.save(reviewToUpdate);
+        Reviews reviewstoupdate = reviewRepository.findById(reviewId).orElse(null);
+        if(reviewstoupdate==null)return false;
+
+        reviewstoupdate.setCompany(company);
+        reviewstoupdate.setContent(review.getContent());
+        reviewstoupdate.setType(review.isType());
+
+        reviewRepository.save(reviewstoupdate);
 
         return true;
     }
